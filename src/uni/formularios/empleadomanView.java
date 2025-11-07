@@ -288,6 +288,7 @@ public class empleadomanView extends javax.swing.JInternalFrame {
                     break;
             }
             JOptionPane.showMessageDialog(this, msg);
+            listarEmpleados();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
