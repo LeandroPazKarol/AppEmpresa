@@ -94,8 +94,7 @@ INSERT INTO lineas(nombre) VALUES ('Linea General');
 INSERT INTO productos(idproducto, descripcion, idlinea, preciocompra, precioventa, stock) VALUES 
 ('P000002', 'Smartphone Modelo X Ultra', 1, 350.00, 550.00, 150);
 
-INSERT INTO proveedores(idproveedor, razonsocial, direccion, ruc, telefono) VALUES 
-('PR000001', 'Proveedor Ejemplo', 'Av. Proveedores 456', '10987654321', '987123456');
+
 
 DELIMITER //
 
