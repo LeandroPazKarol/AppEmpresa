@@ -40,7 +40,7 @@ public class ProveedorDao implements ICrudDao<ProveedorTo> {
             
             cs.executeUpdate();
             cs.close();
-            cn.commit();//confirma que la transaccion se realizado ok
+            cn.commit();
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             try {
                 cn.rollback();
@@ -108,7 +108,29 @@ public class ProveedorDao implements ICrudDao<ProveedorTo> {
 
     @Override
     public ProveedorTo find(Object o) throws Exception {
-        return null;
+        ProveedorTo emp = null;        
+        try {
+            cn = AccesoDB.getConnection();
+            String sql = "SELECT * FROM proveedores WHERE idempleado = ?";
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, o.toString());
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                emp = new ProveedorTo();
+                emp.setIdproveedor(rs.getString("idproveedor"));
+                emp.setRazonsocial(rs.getString("razonsocial"));
+                emp.setDireccion(rs.getString("direccion"));
+                emp.setRuc(rs.getString("ruc"));
+                emp.setTelefono(rs.getString("telefono"));              
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            cn.close();
+        }
+        return emp;
     }
 
     @Override
