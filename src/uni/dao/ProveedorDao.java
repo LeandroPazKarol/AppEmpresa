@@ -111,7 +111,7 @@ public class ProveedorDao implements ICrudDao<ProveedorTo> {
         ProveedorTo emp = null;        
         try {
             cn = AccesoDB.getConnection();
-            String sql = "SELECT * FROM proveedores WHERE idempleado = ?";
+            String sql = "SELECT * FROM proveedores WHERE idproveedor = ?";
             ps = cn.prepareStatement(sql);
             ps.setString(1, o.toString());
             rs = ps.executeQuery();
