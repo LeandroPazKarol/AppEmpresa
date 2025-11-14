@@ -111,7 +111,7 @@ public class ProveedorDao implements ICrudDao<ProveedorTo> {
         ProveedorTo emp = null;        
         try {
             cn = AccesoDB.getConnection();
-            String sql = "SELECT * FROM proveedores WHERE idproveedor = ?";
+            String sql = "{call find_proveedor(?)}";
             ps = cn.prepareStatement(sql);
             ps.setString(1, o.toString());
             rs = ps.executeQuery();
@@ -138,7 +138,7 @@ public class ProveedorDao implements ICrudDao<ProveedorTo> {
         List<ProveedorTo> lista = new ArrayList<>();
         try {
             cn = AccesoDB.getConnection();
-            String sql = "select * from proveedores";
+            String sql = "{call select_proveedores}";
             ps = cn.prepareStatement(sql);
             rs = ps.executeQuery();
             lista = cargaLista(rs);
@@ -153,13 +153,13 @@ public class ProveedorDao implements ICrudDao<ProveedorTo> {
     }
 
     private String generaCodigo() throws SQLException {
-        String sql = "select valor from control where parametro='Proveedores'";
+        String sql = "{call getvalorProveedor}";
         ps = cn.prepareStatement(sql);
         rs = ps.executeQuery();
         rs.next();
         int cont = rs.getInt(1);
         rs.close();
-        sql = "update control set valor=valor+1 where parametro='Proveedores'";
+        sql = "{call UpdateValorProveedor}";
         ps = cn.prepareStatement(sql);
         ps.executeUpdate();
         ps.close();
@@ -207,24 +207,6 @@ public class ProveedorDao implements ICrudDao<ProveedorTo> {
         return codigo;
     }
     
-     public boolean valida(String usu, String pas) throws Exception {
-        boolean sw=false;
-        try {
-            cn = AccesoDB.getConnection();
-            sp = "select * from empleados where usuario=? and clave=?";
-            ps = cn.prepareStatement(sp);
-            ps.setString(1, usu);
-            ps.setString(2, pas);
-            rs = ps.executeQuery();
-            sw = rs.next();
-            rs.close();
-            ps.close();
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cn.close();
-        }
-        return sw;//que puede ser verdadero o falso
-    }
+    
    
 }
