@@ -94,11 +94,16 @@ INSERT INTO lineas(nombre) VALUES ('Linea General');
 INSERT INTO productos(idproducto, descripcion, idlinea, preciocompra, precioventa, stock) VALUES 
 ('P000002', 'Smartphone Modelo X Ultra', 1, 350.00, 550.00, 150);
 
-
+INSERT INTO proveedores(idproveedor, razonsocial, direccion, ruc, telefono) VALUES 
+('PR000001', 'Innova Tech', 'Av. Proveedores 456', '10987654321', '987123456');
+Select *from ventas ;
+select * from detalle_ventas;
+DELETE FROM detalle_ventas WHERE idventa = 4;
+DELETE FROM ventas WHERE idventa = 4;
 
 DELIMITER //
 
-CREATE PROCEDURE sp_Registra_Venta(
+CREATE PROCEDURE sp_Registra_Venta( /* inserta los datos principales de la venta en la tabla ventas*/
     IN p_idventa INT,
     IN p_idcliente VARCHAR(8),
     IN p_idempleado VARCHAR(8),
@@ -112,7 +117,7 @@ BEGIN
 END;
 //
 
-CREATE PROCEDURE sp_Registra_Detalle(
+CREATE PROCEDURE sp_Registra_Detalle(/*registra cada producto vendido en la tabla detalle_ventas*/
     IN p_idventa INT,
     IN p_idproducto VARCHAR(10),
     IN p_precio DECIMAL(10,2),
@@ -125,7 +130,7 @@ BEGIN
 END;
 //
 
-CREATE PROCEDURE sp_Actualiza_Stock(
+CREATE PROCEDURE sp_Actualiza_Stock(/*actualiza el stock del producto restando la cantidad vendida, para mantener el inventario actualizado.*/
     IN p_idproducto VARCHAR(10),
     IN p_cantidad INT
 )
@@ -135,3 +140,44 @@ END;
 //
 
 DELIMITER ;
+DELIMITER //
+
+CREATE PROCEDURE sp_Obtener_Numero_Venta(OUT p_numero INT)
+BEGIN
+  UPDATE control SET valor = valor + 1 WHERE parametro = 'Ventas';
+  SELECT valor INTO p_numero FROM control WHERE parametro = 'Ventas';
+END;
+//
+DELIMITER ;
+DELIMITER $$
+
+CREATE PROCEDURE sp_Empleado_Buscar(IN p_idempleado VARCHAR(8))
+BEGIN
+    SELECT idempleado, nombre, apellidos, email, usuario, clave
+    FROM empleados
+    WHERE idempleado = p_idempleado;
+END $$
+
+DELIMITER ;
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE UpdateValorProveedor()
+update control set valor=valor+1 where parametro='Proveedores'$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE find_proveedor(IN p_idproveedor VARCHAR(8))
+SELECT * FROM proveedores WHERE idproveedor=p_idproveedor$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE getValorProveedor()
+select valor from control where parametro='Proveedores'$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE select_proveedores()
+select * from proveedores$$
+DELIMITER ;
+
+
+
