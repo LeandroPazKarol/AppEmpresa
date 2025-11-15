@@ -8,6 +8,7 @@ public class empleadomanView extends javax.swing.JInternalFrame {
 
     public empleadomanView() {
         initComponents();
+        listarEmpleados();
     }
 
     @SuppressWarnings("unchecked")
@@ -219,7 +220,25 @@ public class empleadomanView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
+        try {
+            String id = txtIdEmpleado.getText().trim();        
+            if (id.isEmpty()) {            
+                JOptionPane.showMessageDialog(this, "Ingrese el ID del empleado a buscar.");
+                return;
+            }
+            emp = obj.EmpleadoBuscar(id);
+            if (emp != null) {            
+                txtNombre.setText(emp.getNombre());
+                txtApellido.setText(emp.getApellidos());
+                txtEmail.setText(emp.getEmail());
+                txtUsuario.setText(emp.getUsuario());
+                txtPassword.setText(emp.getClave());
+            } else {
+                JOptionPane.showMessageDialog(this, "Empleado no encontrado.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -269,10 +288,33 @@ public class empleadomanView extends javax.swing.JInternalFrame {
                     break;
             }
             JOptionPane.showMessageDialog(this, msg);
+            listarEmpleados();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
+    }
+    
+    private void listarEmpleados() {
+        try {
+            java.util.List<EmpleadoTo> lista = obj.EmpleadoListar();
+            
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblEmpleado.getModel();
+            modelo.setRowCount(0);
+            for (EmpleadoTo emp : lista) {
+                Object[] fila = {
+                    emp.getIdempleado(),
+                    emp.getNombre(),
+                    emp.getApellidos(),
+                    emp.getEmail(),
+                    emp.getUsuario()
+                };
+                modelo.addRow(fila);
+            }            
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Error al listar empleados: " + e.getMessage());
+        }
     }
 
     private void leerDatos() {

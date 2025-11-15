@@ -24,7 +24,6 @@ public class EmpleadoDao implements ICrudDao<EmpleadoTo> {
     public void create(EmpleadoTo o) throws Exception {
         try {
             cn = AccesoDB.getConnection();
-            //activar el inicio de la transaccion
             cn.setAutoCommit(false);
             String cod = generaCodigo();
             o.setIdempleado(cod);
@@ -38,7 +37,7 @@ public class EmpleadoDao implements ICrudDao<EmpleadoTo> {
             cs.setString(6, o.getClave());
             cs.executeUpdate();
             cs.close();
-            cn.commit();//confirma que la transaccion se realizado ok
+            cn.commit();
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             try {
                 cn.rollback();
@@ -82,7 +81,6 @@ public class EmpleadoDao implements ICrudDao<EmpleadoTo> {
     public void delete(EmpleadoTo o) throws Exception {
         try {
             cn = AccesoDB.getConnection();
-            //activar el inicio de la transaccion
             cn.setAutoCommit(false);
             sp = "{call sp_Empleado_Eliminar(?)}";
             cs = cn.prepareCall(sp);
@@ -102,8 +100,32 @@ public class EmpleadoDao implements ICrudDao<EmpleadoTo> {
     }
 
     @Override
-    public EmpleadoTo find(Object o) throws Exception {
-        return null;
+    public EmpleadoTo find(Object o) throws Exception {        
+        EmpleadoTo emp = null;        
+        CallableStatement cs = null;        
+        try {
+            cn = AccesoDB.getConnection();
+            String sql = "{ CALL sp_Empleado_Buscar(?) }";
+            cs = cn.prepareCall(sql);
+            cs.setString(1, o.toString());
+            rs = cs.executeQuery();
+            if (rs.next()) {                
+                emp = new EmpleadoTo();
+                emp.setIdempleado(rs.getString("idempleado"));
+                emp.setNombre(rs.getString("nombre"));
+                emp.setApellidos(rs.getString("apellidos"));
+                emp.setEmail(rs.getString("email"));
+                emp.setUsuario(rs.getString("usuario"));
+                emp.setClave(rs.getString("clave"));
+            }            
+            rs.close();
+            cs.close();            
+        } catch (Exception e) {            
+            throw e;            
+        } finally {
+            cn.close();
+        }
+        return emp;
     }
 
     @Override
@@ -124,27 +146,31 @@ public class EmpleadoDao implements ICrudDao<EmpleadoTo> {
         }
         return lista;
     }
-
+   
     private String generaCodigo() throws SQLException {
-        String sql = "select valor from control where parametro='Empleados'";
+        String sql = "SELECT MAX(idempleado) FROM empleados";
         ps = cn.prepareStatement(sql);
         rs = ps.executeQuery();
-        rs.next();
-        int cont = rs.getInt(1);
-        rs.close();
-        sql = "update control set valor=valor+1 where parametro='Empleados'";
-        ps = cn.prepareStatement(sql);
-        ps.executeUpdate();
-        ps.close();
-        String cod = "";
-        if (cont < 10) {
-            cod = "E000" + cont;
-        } else {
-            cod = "E00" + cont;
+        String cod = "E0001";
+        if (rs.next() && rs.getString(1) != null) {
+            String ultimo = rs.getString(1);
+            int num = Integer.parseInt(ultimo.substring(1)) + 1;
+            if (num < 10) {
+                cod = "E000" + num;
+            } else if (num < 100) {
+                cod = "E00" + num;
+            } else if (num < 1000) {
+                cod = "E0" + num;
+            } else {
+                cod = "E" + num;
+            }
         }
+        rs.close();
+        ps.close();
         return cod;
     }
-
+    
+    
     private List<EmpleadoTo> cargaLista(ResultSet rs) throws SQLException {
         List<EmpleadoTo> aux = new ArrayList<>();
         while (rs.next()) {

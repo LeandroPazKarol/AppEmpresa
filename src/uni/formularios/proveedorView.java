@@ -211,7 +211,8 @@ public class proveedorView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
+        buscar();
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -233,13 +234,31 @@ public class proveedorView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtRazon;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
-    //instanciar objeto de la clase Empleadocontroller
-    //EmpleadoController obj = new EmpleadoController();
-    //EmpleadoTo emp;
     
     ProveedorController obj=new ProveedorController();
     ProveedorTo prov;
-
+    
+    private void buscar(){
+         try {
+            String id = txtIdProveedor.getText().trim();        
+            if (id.isEmpty()) {            
+                JOptionPane.showMessageDialog(this, "Ingrese el ID del proveedor a buscar.");
+                return;
+            }
+            prov = obj.ProveedorBuscar(id);
+            if (prov != null) {            
+                txtRazon.setText(prov.getRazonsocial());
+                txtDireccion.setText(prov.getDireccion());
+                txtRUC.setText(prov.getRuc());
+                txtTelefono.setText(prov.getTelefono());
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Proveedor no encontrado.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
+        }
+    }
     private void procesar(int opcion) {
 
         String msg = "";
@@ -265,7 +284,7 @@ public class proveedorView extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-
+        listaProveedor();
     }
 
     private void leerDatos() {
