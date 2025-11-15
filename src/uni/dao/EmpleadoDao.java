@@ -102,13 +102,14 @@ public class EmpleadoDao implements ICrudDao<EmpleadoTo> {
     @Override
     public EmpleadoTo find(Object o) throws Exception {        
         EmpleadoTo emp = null;        
+        CallableStatement cs = null;        
         try {
             cn = AccesoDB.getConnection();
-            String sql = "SELECT * FROM empleados WHERE idempleado = ?";
-            ps = cn.prepareStatement(sql);
-            ps.setString(1, o.toString());
-            rs = ps.executeQuery();
-            if (rs.next()) {
+            String sql = "{ CALL sp_Empleado_Buscar(?) }";
+            cs = cn.prepareCall(sql);
+            cs.setString(1, o.toString());
+            rs = cs.executeQuery();
+            if (rs.next()) {                
                 emp = new EmpleadoTo();
                 emp.setIdempleado(rs.getString("idempleado"));
                 emp.setNombre(rs.getString("nombre"));
@@ -116,11 +117,11 @@ public class EmpleadoDao implements ICrudDao<EmpleadoTo> {
                 emp.setEmail(rs.getString("email"));
                 emp.setUsuario(rs.getString("usuario"));
                 emp.setClave(rs.getString("clave"));
-            }
+            }            
             rs.close();
-            ps.close();
-        } catch (Exception e) {
-            throw e;
+            cs.close();            
+        } catch (Exception e) {            
+            throw e;            
         } finally {
             cn.close();
         }
