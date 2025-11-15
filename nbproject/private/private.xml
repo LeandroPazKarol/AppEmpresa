@@ -2,35 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/dao/VentaDao.java</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/database/AccesoDB.java</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/database/prueba.java</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/entity/VentaTo.java</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/service/IProceso.java</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/service/ICrudDao.java</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/formularios/VentasView.java</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/formularios/Principalview.java</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/1354826121_preferences-desktop-user-password.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/Bar%20Chart_1.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/FaceBook_24x24.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/Cortar.gif</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/Money_1.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/Shopping_Full.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/Vista%20Users.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/_folder_orange.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/blockdevice.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/distributor-report.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/old-go-previous.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/printer.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/social_google_1.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/user-password.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/usbpendrive.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/imagen/sign_dolar_24.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/dao/ProductoDao.java</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/reportes/coffee.jpg</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/reportes/coffee_stain.png</file>
-            <file>file:/C:/Users/Usuario/Documents/NetBeansProjects/AppMiEmpresa/src/uni/formularios/LoginView.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
